@@ -1,1 +1,58 @@
-<html><head>qqq</head><title>qqq</title><body>qqqeee</body></html>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Coding Notes</title>
+</head>
+
+<body>
+    <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+    <ul>
+        <a href="#lession1">
+            <li>a</li>
+        </a>
+        <li>b</li>
+        <li>c</li>
+        <li>d</li>
+        <li>e</li>
+    </ul>
+
+<a id="lession1">
+    <pre class="prettyprint">
+            #include <bits/stdc++.h>
+            using namespace std;
+            
+            int main()
+            {
+                // your code goes here
+                int t;
+                cin >> t;
+                while (t--)
+                {
+                    int n;
+                    cin >> n;
+                    int arr[n];
+                    for (int i = 0; i < n; i++)
+                        cin >> arr[i];
+                    int count = 0;
+                    for (int i = 0; i < n; i++)
+                    {
+                        for (int j = 0; j < n - i; j++)
+                        {
+                            if (accumulate(arr + i, arr + i + j + 1, 1, multiplies<int>()) == accumulate(arr + i, arr + i + j + 1, 0))
+                                count++;
+                        }
+                    }
+                    cout << count << endl;
+                }
+                return 0;
+            }
+            
+    </pre>
+</a>
+</body>
+
+</html>
