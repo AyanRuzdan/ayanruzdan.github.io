@@ -1,0 +1,38 @@
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code&display=swap');
+body {
+  margin: 0;
+  padding: 0;
+  color: black;
+  font-family: 'Fira Code', monospace;
+  background: linear-gradient(-45deg, #ffbca8, #ffa4c7, #a9e8ff, #a8ffeb);
+  background-size: 400% 400%;
+  animation: gradient 10s ease infinite;
+  height: 100vh;
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+a {
+  text-decoration: none;
+  color: black;
+  text-decoration: underline;
+  margin: 0;
+  padding: 0;
+}
+ul {
+  list-style-type: square;
+}
+iframe {
+  margin-left: 25vw;
+  height: 50vh;
+}
