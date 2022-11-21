@@ -2,7 +2,7 @@
 using namespace std;
 int main()
 {
-    int n; //Size of array
+    int n; // Size of array
     cout << "Enter size of array: ";
     cin >> n;
     int arr[n]; // Make an array of size n
