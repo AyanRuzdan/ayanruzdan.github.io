@@ -1,36 +1,11 @@
 body {
+  background-color: black;
+  color: limegreen;
   margin: 0;
   padding: 0;
-  color: black;
-  font-family:Arial, Helvetica, sans-serif ;
-  background-size: 400% 400%;
-  background: linear-gradient(-45deg, #ffbca8, #ffa4c7, #a9e8ff, #a8ffeb);
-  animation: gradient 10s ease infinite;
-  height: 100%;
+  font-family:'Courier New', Courier, monospace ;
 }
-@keyframes gradient {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
-}
-
-a {
+a{
+  color: limegreen;
   text-decoration: none;
-  color: black;
-  text-decoration: underline;
-  margin: 0;
-  padding: 0;
-}
-ul {
-  list-style-type: square;
-}
-iframe {
-  margin-left: 25vw;
-  height: 50vh;
 }
