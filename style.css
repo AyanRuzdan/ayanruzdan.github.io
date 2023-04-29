@@ -1,12 +1,9 @@
 body {
   margin: 0;
   padding: 0;
-  /* font-family:'CMU Serif', Courier, monospace ; */
   font-family: 'DM Serif Text', serif;
-}
-a{
-  color: limegreen;
-  text-decoration: none;
+  font-weight: 900;
+  font-style: italic;
 }
 #box1 ul{
   list-style-type: none;
