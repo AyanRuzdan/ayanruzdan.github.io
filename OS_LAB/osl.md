@@ -1,3 +1,16 @@
+# Table of Contents
+
+1. [Experiment 1](#exp1)
+2. [Experiment 2](#exp2)
+3. [Experiment 3](#exp3)
+4. [Experiment 4](#exp4)
+5. [Experiment 5](#exp5)
+6. [Experiment 6](#exp6)
+7. [Experiment 7](#exp7)
+8. [Experiment 8](#exp8)
+
+<a name="exp1"></a>
+
 # Experiment 1 : Introduction to Linux Commands
 
 ## Aim
@@ -55,7 +68,7 @@ Move files from one directory to another|`mv`
 
 Ans.
 
-```bash
+```shell
 ruzdan@Ubuntu:~$ touch file1.txt
 ruzdan@Ubuntu:~$ ls
 Desktop  Documents  Downloads  file1.txt  Music  Pictures  Public  snap  Templates  Videos
@@ -124,6 +137,7 @@ ruzdan@Ubuntu:~$ ls
 Aayush  Desktop    Downloads  Music     Public   snap       Videos
 Ayan    Documents  Harsh      Pictures  Shubham  Templates
 ```
+<a name="exp2"></a>
 
 # Experiment 2 : Shell Programming
 
