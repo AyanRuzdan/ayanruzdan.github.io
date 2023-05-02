@@ -182,4 +182,118 @@ echo "Sum is $b"
 
 ## Flow Control
 
-The shell supports various commands to control 
+The shell supports various commands to control the flow of execution in a program. The basic constructs whic provide the flow control are:
+
+* if, if-then, if-then-else, if-then-elif-then-else
+* case
+
+## `if, if-then, if-then-else, if-then-elif-then-else`
+
+The `if` command is fairly simple on the surface, it makes a decision based on the exit status of a command. The `if` command's syntax looks like this:
+```bash
+if <condition>
+then
+    commands
+elif <condition>
+then
+    commands
+else
+    commands
+fi
+```
+
+## `case` construction
+
+The case command evaluates the given test expression and performs the matching operation against each case value to continnue the execution of commands. The default condition `(*)` will be executed when no match is found. The basic syntax of the `case...esac` statement is:
+
+```bash
+case <test-value> in
+value1)
+<commands>
+;;
+value2)
+<commands>
+;;
+value3)
+<commands>
+;;
+*)
+<commands>
+;;
+esac
+```
+
+**Example Program**
+The following shell program demonstrates the selection of a number with case statement.
+
+```bash
+num="one"
+case "$num" in
+"one") echo "Number is 1"
+;;
+"two") echo "Number is 2"
+;;
+"three") echo "Number is 3"
+;;
+*) echo "No Number"
+;;
+esac
+```
+
+## Loops
+
+Loops in shell scriptiing are used to execute a set of commands for a certain number of times. These loops will execute the commands repeatedly until a condition fulfils. The basic loops in shell scripting are:
+
+* `while` loop
+* `for` loop
+
+**`while` loop**
+The basic format for the while loop is:
+
+```bash
+while [expression]
+do
+    <command-list>
+done
+```
+
+The commands in the while expression are executed to enter into the loop for executing the command-list.
+
+**Example program**
+
+The following example program prints the numbers from 0 to 9.
+
+```bash
+# mind the gap between the brackets
+num=0
+while [ $num -lt 10 ]
+do
+    echo $num
+    num = $(expr "$num" + 1)
+done
+```
+
+**`for` loop**
+The **`for`** loop executes a set of commands for a specified number of times. The syntax of for loop in shell scriptin is presented as follows:
+
+```bash
+for var in list
+do
+    <command-list>
+done
+```
+
+The for loop includes a number of items in the list and var is a looping variable. The for loop will execute the commandd-list for each item in the list.
+
+**Example program**
+The following example prints the numbers from 1 to 5
+```bash
+# mind the gap during string assignment
+list="one two three four five"
+# no need to initialize a counter first
+for num in $list
+do
+    echo $num
+    # no need to update the counter either
+done
+```
