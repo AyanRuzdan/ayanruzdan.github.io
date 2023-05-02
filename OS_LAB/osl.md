@@ -297,3 +297,82 @@ do
     # no need to update the counter either
 done
 ```
+
+## Lab Exercises
+
+### 1. Write a shell script to produce a multiplication table
+
+**First Method**
+
+```bash
+echo "Enter Number:"
+read num
+for (( i = 1 ; i <= 10; i++ ))
+do
+echo "$num x $i = 'expr $num \* $i'"
+done
+```
+
+**Second Method**
+
+```bash
+echo "Enter Number:"
+read num
+for i in 1 2 3 4 5 6 7 8 9 10
+do
+echo "$num x $i = 'expr $num \* $i'"
+done
+```
+
+### 2. Write a shell script program to implement a small calculator
+
+```bash
+echo "Enter number1: "
+read num1
+echo "Enter number2: "
+read num2
+echo "Enter operator + - * /"
+read op
+case "$op" in
+"+")
+echo $(expr "$num1" + "$num2")
+"-")
+echo $(expr "$num1" - "$num2")
+"*")
+echo $(expr "$num1" \* "$num2")
+"/")
+echo $(expr "$num1" / "$num2")
+*)
+echo "Wrong Operator"
+esac
+```
+
+### 3. Write a shell script to display prime numbers up to the given limit.
+
+```bash
+echo "Enter a limit: "
+read limit
+echo "Prime numbers upto $limit are: "
+echo "1"
+# we do not give spaces during variable assignment
+i=2
+while [ $i -le $limit ]
+do
+    flag=1
+    j=2
+    while [ $j -lt $i ]
+    do
+        rem=$(expr "$i" % "$j" )
+        if [ $rem -eq 0 ]
+            flag = 0
+            break
+        fi
+        j=$(expr "$j" + 1 )
+    done
+    if [ $flag -eq 1 ]
+    then
+        echo "$i"
+    fi
+    i=$(expr "$i" + 1)
+done
+```
