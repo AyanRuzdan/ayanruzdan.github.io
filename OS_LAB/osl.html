@@ -7,13 +7,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script type="module" src="https://md-block.verou.me/md-block.js"></script>
     <script src="../script.js"></script>
-    
+
     <link rel="stylesheet" href="osl.css">
     <link rel="stylesheet" href="../prism.css">
     <title>Operating Systems Laboratory</title>
 </head>
 
 <body>
+    <div id="preloader">
+        <div class="center">
+            <div class="wave"></div>
+            <div class="wave"></div>
+            <div class="wave"></div>
+            <div class="wave"></div>
+            <div class="wave"></div>
+            <div class="wave"></div>
+            <div class="wave"></div>
+            <div class="wave"></div>
+            <div class="wave"></div>
+            <div class="wave"></div>
+        </div>
+    </div>
+    <script>
+        window.addEventListener('load', function () {
+            var preloader = document.getElementById("preloader");
+            preloader.style.display = 'none';
+        });
+    </script>
     <script src="prism.js"></script>
     <md-block src="../OS_LAB/osl.md">
         # Experiment
