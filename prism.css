@@ -49,6 +49,9 @@ pre[class*="language-"] {
 :not(pre) > code[class*="language-"],
 pre[class*="language-"] {
   background: #f5f2f0;
+  /* background: red; */
+  border-radius: 10px;
+  margin: 1%;
 }
 :not(pre) > code[class*="language-"] {
   padding: 0.1em;
@@ -123,4 +126,6 @@ a{
 body{
   background-color: black;
   color: white;
+  padding: 1%;
+  margin: 1%;
 }
