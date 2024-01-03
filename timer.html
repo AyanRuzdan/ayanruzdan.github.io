@@ -54,15 +54,15 @@
     }
     function resetCountdown() {
         clearInterval(countdownInterval);
-        countdownValue = 200;
+        countdownValue = 500;
         updateCountdownDisplay();
     }
     function updateCountdownDisplay() {
         document.getElementById('countdown').innerText = countdownValue;
     }
     function increaseTime() {
-        if ((countdownValue + 1) > 200) {
-            countdownValue = 201;
+        if ((countdownValue + 1) > 500) {
+            countdownValue = 501;
             updateCountdownDisplay();
         }
         else {
