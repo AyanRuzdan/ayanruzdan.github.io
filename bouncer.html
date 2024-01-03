@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat&display=swap" rel="stylesheet">
+    <style>
+        #container {
+            position: relative;
+            width: 500px;
+            height: 300px;
+            overflow: hidden;
+            margin: 25vh auto;
+            border: 2px solid black;
+        }
+
+        button {
+            width: 100px;
+            height: 50px;
+            background-color: white;
+            border: 4px solid pink;
+            border-radius: 50px;
+            font-size: 25px;
+            transition: transform 0.50s ease;
+            margin: auto;
+        }
+
+        * {
+            font-family: 'Caveat', cursive;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="container">
+        <button>Yes</button>
+        <button id="movingButton">No</button>
+    </div>
+    <br>
+    <p id="rando"></p>
+
+    <script>
+        var container = document.getElementById('container');
+        var button = document.getElementById('movingButton');
+        var eventList = ["mouseover", "click"];
+
+        for (event of eventList) {
+            container.addEventListener(event, function () {
+                var randomX = Math.floor(Math.random() * (container.clientWidth - button.clientWidth));
+                var randomY = Math.floor(Math.random() * (container.clientHeight - button.clientHeight));
+                button.style.transform = 'translate(' + randomX + 'px, ' + randomY + 'px)';
+                var x = document.getElementByID("rando");
+                x.innerHTML = Math.random();
+            });
+        }
+    </script>
+
+</body>
+
+</html>
