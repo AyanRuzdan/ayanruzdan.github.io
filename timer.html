@@ -24,73 +24,88 @@
 </head>
 
 <body class="container">
-    <h1 id="countdown-label" class="h6" style="color: red;">Space/Click to Toggle, R to Reset </h1>
+    <h1 id="countdown-label" class="h6" style="color: red;">Space/Click to Toggle, R to Reset, Up Arrow for +1, Down
+        Arrow for -1</h1>
     <h1 id="countdown-label" class="h1">500 seconds of Attention</h1>
-    <h1 id="countdown" class="display-1">20</h1>
+    <h1 id="countdown" class="display-1">500</h1>
 </body>
 <script>
     let countdownValue = parseInt(document.getElementById('countdown').innerText);
     let countdownInterval;
     let bellSound = new Audio('./bell.mp3');
-    let otherSound = new Audio('./start_stop.mp3');
-    document.addEventListener('keydown', function (event) {
-        if (event.code === 'Space') {
-            if (countdownValue !== 0) {
-                playAudioSegment(otherSound, 0, 1);
-            }
-            toggleCountdown();
-        } else if (event.code === 'KeyR') {
-            resetCountdown();
-        }
-    });
-    document.addEventListener('click', function () {
-        if (countdownValue !== 0) {
-            playAudioSegment(otherSound, 0, 1);
-        }
-        toggleCountdown();
-    });
-    document.addEventListener('visibilitychange', function () {
-        if (!document.hidden) {
-            if (countdownValue > 0) {
-                countdownInterval = setInterval(updateCountdown, 500);
-            } else if (countdownValue === 0) {
-                clearInterval(countdownInterval);
-                playAudioSegment(bellSound, 0, 1);
-            }
-        }
-    });
+    let toggleSound = new Audio("./toggle.mp3");
     function toggleCountdown() {
         if (countdownInterval) {
             clearInterval(countdownInterval);
+            toggleSound.play();
             countdownInterval = null;
         } else if (countdownValue > 0) {
-            countdownInterval = setInterval(updateCountdown, 500);
+            countdownInterval = setInterval(updateCountdown, 1000);
+            toggleSound.play();
         }
     }
     function updateCountdown() {
         countdownValue--;
-        if (countdownValue === 0) {
+        if (countdownValue <= 0) {
             clearInterval(countdownInterval);
-            playAudioSegment(bellSound, 0, 1);
+            bellSound.play();
         }
         updateCountdownDisplay();
     }
     function resetCountdown() {
         clearInterval(countdownInterval);
-        countdownValue = 20; // Replace with the initial value
+        countdownValue = 200;
         updateCountdownDisplay();
     }
     function updateCountdownDisplay() {
         document.getElementById('countdown').innerText = countdownValue;
     }
-    function playAudioSegment(audio, start, end) {
-        audio.currentTime = start;
-        audio.play();
-        setTimeout(function () {
-            audio.pause();
-            audio.currentTime = 0;
-        }, (end - start) * 1000);
+    function increaseTime() {
+        if ((countdownValue + 1) > 200) {
+            countdownValue = 201;
+            updateCountdownDisplay();
+        }
+        else {
+            countdownValue += 1;
+            updateCountdownDisplay();
+        }
     }
+    function decreaseTime() {
+        if ((countdownValue - 1) <= 0) {
+            countdownValue = 0;
+            updateCountdownDisplay();
+        }
+        else {
+            countdownValue -= 1;
+            updateCountdownDisplay();
+        }
+    }
+    document.addEventListener('keydown', (event) => {
+        if (event.code === 'Space') {
+            toggleCountdown();
+        } else if (event.code === 'KeyR') {
+            resetCountdown();
+        }
+    });
+    document.addEventListener('click', () => {
+        toggleCountdown();
+    });
+    document.addEventListener('keydown', (event) => {
+        if (event.code === 'ArrowUp')
+            increaseTime();
+        if (event.code === 'ArrowDown')
+            decreaseTime();
+    })
+    document.addEventListener('visibilitychange', () => {
+        if (!document.hidden) {
+            if (countdownValue > 0) {
+                countdownInterval = setInterval(updateCountdown, 1000);
+            } else if (countdownValue === 0) {
+                clearInterval(countdownInterval);
+                bellSound.play();
+            }
+        }
+    });
 </script>
 
 </html>
