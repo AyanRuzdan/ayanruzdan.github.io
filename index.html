@@ -14,6 +14,7 @@
             height: 300px;
             overflow: hidden;
             margin: 25vh auto;
+            border: 2px solid black;
         }
 
         button {
@@ -36,8 +37,11 @@
 <body>
 
     <div id="container">
+        <button>Yes</button>
         <button id="movingButton">No</button>
     </div>
+    <br>
+    <p id="rando"></p>
 
     <script>
         var container = document.getElementById('container');
@@ -48,8 +52,9 @@
             container.addEventListener(event, function () {
                 var randomX = Math.floor(Math.random() * (container.clientWidth - button.clientWidth));
                 var randomY = Math.floor(Math.random() * (container.clientHeight - button.clientHeight));
-
                 button.style.transform = 'translate(' + randomX + 'px, ' + randomY + 'px)';
+                var x = document.getElementByID("rando");
+                x.innerHTML = Math.random();
             });
         }
     </script>
