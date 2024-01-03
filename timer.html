@@ -26,35 +26,36 @@
 <body class="container">
     <h1 id="countdown-label" class="h6" style="color: red;">Space/Click to Toggle, R to Reset </h1>
     <h1 id="countdown-label" class="h1">500 seconds of Attention</h1>
-    <h1 id="countdown" class="display-1">10</h1>
+    <h1 id="countdown" class="display-1">20</h1>
 </body>
 <script>
-    let countdownValue = parseInt(document.getElementById('countdown').innerHTML);
+    let countdownValue = parseInt(document.getElementById('countdown').innerText);
     let countdownInterval;
     let bellSound = new Audio('./bell.mp3');
     let otherSound = new Audio('./start_stop.mp3');
     document.addEventListener('keydown', function (event) {
         if (event.code === 'Space') {
-            if (countdownValue === 0) {
-                bellSound.currentTime = 0;
-                bellSound.play();
+            if (countdownValue !== 0) {
+                playAudioSegment(otherSound, 0, 1);
             }
-            else otherSound.play();
             toggleCountdown();
-        } else if (event.code === 'KeyR') resetCountdown();
+        } else if (event.code === 'KeyR') {
+            resetCountdown();
+        }
     });
     document.addEventListener('click', function () {
-        if (countdownValue === 0) otherSound.play();
-        else bellSound.play();
+        if (countdownValue !== 0) {
+            playAudioSegment(otherSound, 0, 1);
+        }
         toggleCountdown();
     });
     document.addEventListener('visibilitychange', function () {
         if (!document.hidden) {
-            // Tab is visible, resume countdown if it was running
-            if (countdownValue > 0) countdownInterval = setInterval(updateCountdown, 333);
-            else if (countdownValue === 0) {
+            if (countdownValue > 0) {
+                countdownInterval = setInterval(updateCountdown, 500);
+            } else if (countdownValue === 0) {
                 clearInterval(countdownInterval);
-                bellSound.play();
+                playAudioSegment(bellSound, 0, 1);
             }
         }
     });
@@ -62,23 +63,33 @@
         if (countdownInterval) {
             clearInterval(countdownInterval);
             countdownInterval = null;
-        } else if (countdownValue > 0) countdownInterval = setInterval(updateCountdown, 333);
+        } else if (countdownValue > 0) {
+            countdownInterval = setInterval(updateCountdown, 500);
+        }
     }
     function updateCountdown() {
         countdownValue--;
         if (countdownValue === 0) {
             clearInterval(countdownInterval);
-            bellSound.play();
+            playAudioSegment(bellSound, 0, 1);
         }
         updateCountdownDisplay();
     }
     function resetCountdown() {
         clearInterval(countdownInterval);
-        countdownValue = 500;
+        countdownValue = 20; // Replace with the initial value
         updateCountdownDisplay();
     }
     function updateCountdownDisplay() {
         document.getElementById('countdown').innerText = countdownValue;
+    }
+    function playAudioSegment(audio, start, end) {
+        audio.currentTime = start;
+        audio.play();
+        setTimeout(function () {
+            audio.pause();
+            audio.currentTime = 0;
+        }, (end - start) * 1000);
     }
 </script>
 
