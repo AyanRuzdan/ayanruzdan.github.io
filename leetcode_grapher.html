@@ -1,218 +1,120 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Problems Solved Line Chart</title>
-    <!-- Bootstrap CSS -->
-    <link
-      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
-    <!-- Chart.js -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  </head>
-  <body>
-    <div class="container mt-5">
-      <h1 class="mb-4 text-center">Problems Solved Line Chart</h1>
 
-      <!-- Upload button -->
-      <div class="row justify-content-center">
-        <div class="col-md-12 text-center">
-          <input
-            type="file"
-            id="jsonFileInput"
-            class="form-control-file mb-3"
-            accept=".json"
-          />
-        </div>
-      </div>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Problems Solved Line Charts</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
 
-      <!-- Checkboxes for toggling graphs -->
-      <div class="row justify-content-center">
-        <div class="col-md-12 text-center">
-          <label class="mr-3">
-            <input type="checkbox" id="toggleAllProblems" checked /> All
-            Problems Solved
-          </label>
-          <label class="mr-3">
-            <input type="checkbox" id="toggleEasyProblems" checked /> Easy
-            Problems Solved
-          </label>
-          <label class="mr-3">
-            <input type="checkbox" id="toggleMediumProblems" checked /> Medium
-            Problems Solved
-          </label>
-          <label class="mr-3">
-            <input type="checkbox" id="toggleHardProblems" checked /> Hard
-            Problems Solved
-          </label>
-          <label class="mr-3">
-            <input type="checkbox" id="toggleRanking" checked /> Ranking
-          </label>
-        </div>
-      </div>
+<body>
+  <div class="container mt-5">
+    <h1 class="mb-4 text-center">Problems Solved Line Charts</h1>
 
-      <div class="row justify-content-center mt-4">
-        <div class="col-md-12">
-          <canvas id="problemsChart" width="900" height="500"></canvas>
-        </div>
+    <!-- Upload button -->
+    <div class="row justify-content-center">
+      <div class="col-md-12 text-center">
+        <input type="file" id="jsonFileInput" class="form-control-file mb-3" accept=".json" />
       </div>
     </div>
 
-    <!-- Bootstrap JS (optional) -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-    <script>
-      let problemsChart; // Global variable for the chart
+    <div class="row justify-content-center mt-5">
+      <div class="col-md-6">
+        <canvas id="rankingChart" width="1100" height="550"></canvas>
+      </div>
+      <div class="col-md-6">
+        <canvas id="easyProblemsChart" width="1100" height="550"></canvas>
+      </div>
+      <div class="col-md-6">
+        <canvas id="mediumProblemsChart" width="1100" height="550"></canvas>
+      </div>
+      <div class="col-md-6">
+        <canvas id="hardProblemsChart" width="1100" height="550"></canvas>
+      </div>
+    </div>
+  </div>
 
-      // Function to handle file input and read the uploaded JSON file
-      document
-        .getElementById("jsonFileInput")
-        .addEventListener("change", function (event) {
-          const file = event.target.files[0];
-          if (file) {
-            const reader = new FileReader();
-            reader.onload = function (e) {
-              const jsonData = JSON.parse(e.target.result);
-              renderChart(jsonData); // Call the function to render chart
-            };
-            reader.readAsText(file); // Read the file as text
-          }
-        });
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-      // Function to render the chart with the given data
-      function renderChart(jsonData) {
-        const dates = jsonData.map((entry) => entry.date);
-        const allProblems = jsonData.map((entry) => entry.solved_problems.All);
-        const easyProblems = jsonData.map(
-          (entry) => entry.solved_problems.Easy
-        );
-        const mediumProblems = jsonData.map(
-          (entry) => entry.solved_problems.Medium
-        );
-        const hardProblems = jsonData.map(
-          (entry) => entry.solved_problems.Hard
-        );
-        const ranking = jsonData.map((entry) => entry.ranking);
+  <script>
+    let easyProblemsChart, mediumProblemsChart, hardProblemsChart, rankingChart;
 
-        const ctx = document.getElementById("problemsChart").getContext("2d");
+    document.getElementById("jsonFileInput").addEventListener("change", function (event) {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          const jsonData = JSON.parse(e.target.result);
+          renderCharts(jsonData); 
+        };
+        reader.readAsText(file);
+      }
+    });
 
-        // If chart exists, destroy it to prevent duplicate charts
-        if (problemsChart) {
-          problemsChart.destroy();
-        }
+    function renderCharts(jsonData) {
+      const dates = jsonData.map((entry) => entry.date);
+      const easyProblems = jsonData.map((entry) => entry.solved_problems.Easy);
+      const mediumProblems = jsonData.map((entry) => entry.solved_problems.Medium);
+      const hardProblems = jsonData.map((entry) => entry.solved_problems.Hard);
+      const ranking = jsonData.map((entry) => entry.ranking);
 
-        // Create the chart
-        problemsChart = new Chart(ctx, {
-          type: "line",
-          data: {
-            labels: dates,
-            datasets: [
-              {
-                label: "All Problems Solved",
-                data: allProblems,
-                borderColor: "rgba(0, 0, 255, 1)", // Blue color
-                backgroundColor: "rgba(0, 0, 255, 0.2)",
-                fill: false,
-                tension: 0.1,
-                hidden: false,
+      // Create charts
+      easyProblemsChart = createChart('easyProblemsChart', dates, easyProblems, 'Easy Problems Solved', 'rgba(0, 255, 0, 1)');
+      mediumProblemsChart = createChart('mediumProblemsChart', dates, mediumProblems, 'Medium Problems Solved', 'rgba(255, 255, 0, 1)');
+      hardProblemsChart = createChart('hardProblemsChart', dates, hardProblems, 'Hard Problems Solved', 'rgba(255, 0, 0, 1)');
+      rankingChart = createChart('rankingChart', dates, ranking, 'Ranking', 'rgba(255, 132, 0, 1)');
+
+    }
+
+    function createChart(canvasId, labels, data, label, borderColor) {
+      const ctx = document.getElementById(canvasId).getContext("2d");
+      return new Chart(ctx, {
+        type: "line",
+        data: {
+          labels: labels,
+          datasets: [{
+            label: label,
+            data: data,
+            borderColor: borderColor,
+            backgroundColor: borderColor.replace('1)', '0.2)'),
+            fill: false,
+            tension: 0.1,
+            pointRadius: 0,
+          }],
+        },
+        options: {
+          scales: {
+            x: {
+              title: {
+                display: true,
+                text: "Date",
               },
-              {
-                label: "Easy Problems Solved",
-                data: easyProblems,
-                borderColor: "rgba(0, 255, 0, 1)", // Green color
-                backgroundColor: "rgba(0, 255, 0, 0.2)",
-                fill: false,
-                tension: 0.1,
-                hidden: false,
-              },
-              {
-                label: "Medium Problems Solved",
-                data: mediumProblems,
-                borderColor: "rgba(255, 255, 0, 1)", // Yellow color
-                backgroundColor: "rgba(255, 255, 0, 0.2)",
-                fill: false,
-                tension: 0.1,
-                hidden: false,
-              },
-              {
-                label: "Hard Problems Solved",
-                data: hardProblems,
-                borderColor: "rgba(255, 0, 0, 1)", // Red color
-                backgroundColor: "rgba(255, 0, 0, 0.2)",
-                fill: false,
-                tension: 0.1,
-                hidden: false,
-              },
-              {
-                label: "Ranking",
-                data: ranking,
-                borderColor: "rgba(255, 132, 0, 1)", // Orange color
-                backgroundColor: "rgba(255, 132, 0, 0.2)",
-                fill: false,
-                tension: 0.1,
-                hidden: false,
-              },
-            ],
-          },
-          options: {
-            scales: {
-              x: {
-                title: {
-                  display: true,
-                  text: "Date",
-                },
-              },
-              y: {
-                title: {
-                  display: true,
-                  text: "Number of Problems Solved",
-                },
+            },
+            y: {
+              title: {
+                display: true,
+                text: "Number of Problems Solved",
               },
             },
           },
-        });
+        },
+      });
+    }
 
-        // Attach checkbox listeners to toggle datasets visibility
-        document
-          .getElementById("toggleAllProblems")
-          .addEventListener("change", function () {
-            problemsChart.data.datasets[0].hidden = !this.checked;
-            problemsChart.update();
-          });
+    function attachToggleListener(checkboxId, chart) {
+      document.getElementById(checkboxId).addEventListener("change", function () {
+        chart.data.datasets[0].hidden = !this.checked;
+        chart.update();
+      });
+    }
+  </script>
+</body>
 
-        document
-          .getElementById("toggleEasyProblems")
-          .addEventListener("change", function () {
-            problemsChart.data.datasets[1].hidden = !this.checked;
-            problemsChart.update();
-          });
-
-        document
-          .getElementById("toggleMediumProblems")
-          .addEventListener("change", function () {
-            problemsChart.data.datasets[2].hidden = !this.checked;
-            problemsChart.update();
-          });
-
-        document
-          .getElementById("toggleHardProblems")
-          .addEventListener("change", function () {
-            problemsChart.data.datasets[3].hidden = !this.checked;
-            problemsChart.update();
-          });
-
-        document
-          .getElementById("toggleRanking")
-          .addEventListener("change", function () {
-            problemsChart.data.datasets[4].hidden = !this.checked;
-            problemsChart.update();
-          });
-      }
-    </script>
-  </body>
 </html>
-  
