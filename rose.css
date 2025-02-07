@@ -1,0 +1,133 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #ffffff;
+    flex-direction: column;
+    position: relative;
+}
+
+.text-overlay {
+    position: absolute;
+    font-size: 24px;
+    font-weight: bold;
+    color: #d40d5c;
+    text-align: center;
+    cursor: pointer;
+}
+
+.title {
+    top: 20px;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.bloom-text {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 20px;
+    background: rgba(255, 255, 255, 0.7);
+    padding: 8px 12px;
+    border-radius: 10px;
+    transition: opacity 0.5s;
+}
+
+.rose-container {
+    position: relative;
+    cursor: pointer;
+}
+
+.rose-container:hover .bloom-text {
+    opacity: 0;
+}
+
+.stem {
+    width: 10px;
+    height: 150px;
+    background-color: green;
+    position: absolute;
+    bottom: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    transition: height 1s ease;
+}
+
+.leaf {
+    width: 30px;
+    height: 20px;
+    background-color: green;
+    position: absolute;
+    border-radius: 50%;
+    transition: transform 1s ease;
+}
+
+.leaf.left {
+    left: -20px;
+    top: 50px;
+    transform: rotate(-30deg);
+}
+
+.leaf.right {
+    right: -20px;
+    top: 80px;
+    transform: rotate(30deg);
+}
+
+.petal {
+    width: 50px;
+    height: 50px;
+    background-color: red;
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0;
+    transition: opacity 1s ease;
+}
+
+.petal.center {
+    left: 50%;
+    top: 0;
+    transform: translateX(-50%);
+}
+
+.petal.left {
+    left: 20px;
+    top: -10px;
+}
+
+.petal.right {
+    right: 20px;
+    top: -10px;
+}
+
+.petal.bottom-left {
+    left: 30px;
+    top: 20px;
+}
+
+.petal.bottom-right {
+    right: 30px;
+    top: 20px;
+}
+
+.bloom .petal {
+    opacity: 1;
+}
+
+.bloom .stem {
+    height: 180px;
+}
+
+div {
+    margin: 0 auto;
+}
+
+body > * {
+    width: 500px;
+}
+
+#svg {
+    background-color: rgb(255, 255, 255);
+    background: radial-gradient(darkseagreen 0%, blrgb(0, 0, 0) 0%);
+}
