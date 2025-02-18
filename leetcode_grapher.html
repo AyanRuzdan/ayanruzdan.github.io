@@ -12,10 +12,21 @@
 <body>
     <div class="container mt-5">
         <h1 class="mb-4 text-center">Problems Solved Line Charts</h1>
-        <canvas id="rankingChart"></canvas>
-        <canvas id="easyChart"></canvas>
-        <canvas id="mediumChart"></canvas>
-        <canvas id="hardChart"></canvas>
+        <h2 class="mb-5 text-center">userid: <a href="https://leetcode.com/u/ayanruzdan/">ayanruzdan</a></h2>
+        <div class="row">
+            <div class="col-md-6">
+                <canvas id="rankingChart"></canvas>
+            </div>
+            <div class="col-md-6">
+                <canvas id="easyChart"></canvas>
+            </div>
+            <div class="col-md-6">
+                <canvas id="mediumChart"></canvas>
+            </div>
+            <div class="col-md-6">
+                <canvas id="hardChart"></canvas>
+            </div>
+        </div>
     </div>
     <script>
         let rankingChart, easyChart, mediumChart, hardChart;
@@ -42,7 +53,7 @@
             const hardProblems = jsonData.map(entry => entry.solved_problems?.Hard || 0);
 
             updateChart(rankingChart, 'rankingChart', dates, rankings, 'Ranking', 'rgba(0, 0, 255, 1)');
-            updateChart(easyChart, 'easyChart', dates, easyProblems, 'Easy Problems Solved', 'rgba(54, 162, 235, 1)');
+            updateChart(easyChart, 'easyChart', dates, easyProblems, 'Easy Problems Solved', 'rgba(28, 186, 186, 1)');
             updateChart(mediumChart, 'mediumChart', dates, mediumProblems, 'Medium Problems Solved', 'rgba(255, 206, 86, 1)');
             updateChart(hardChart, 'hardChart', dates, hardProblems, 'Hard Problems Solved', 'rgba(255, 99, 132, 1)');
         }
