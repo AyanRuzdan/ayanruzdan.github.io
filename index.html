@@ -1,41 +1,319 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ayan Ruzdan | Portfolio</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="./assets/css/styles.css" />
+  </head>
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-4">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#" aria-label="Ayan Ruzdan Portfolio Home"
+          >Ayan Ruzdan</a
+        >
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarContent"
+          aria-controls="navbarContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div
+          class="collapse navbar-collapse justify-content-end"
+          id="navbarContent"
+        >
+          <div class="navbar-nav">
+            <a
+              href="mailto:ayanruzdan@gmail.com"
+              class="nav-link text-white me-3"
+              aria-label="Email Ayan Ruzdan"
+            >
+              ayanruzdan@gmail.com
+            </a>
+            <a
+              href="https://github.com/AyanRuzdan"
+              class="nav-link text-white me-3"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Visit Ayan's GitHub profile"
+            >
+              GitHub
+            </a>
+            <a
+              href="https://linkedin.com/in/ayan-ruzdan"
+              class="nav-link text-white"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Visit Ayan's LinkedIn profile"
+            >
+              LinkedIn
+            </a>
+          </div>
+        </div>
+      </div>
+    </nav>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
-    <title>Dumb Websites Collection</title>
-</head>
-<style>
-    a {
-        color: black;
-    }
+    <!-- Main Content -->
+    <main class="container mt-5">
+      <!-- About -->
+      <section class="mb-5" id="about">
+        <h2>About Me</h2>
+        <p>
+          Final year B.Tech CSE student passionate about Data Engineering, Cloud
+          Technologies, and Full-Stack development. Hands-on experience with ETL
+          pipelines, CI/CD, and scalable backend systems.
+        </p>
+      </section>
 
-    .container {
-        margin: auto;
-        padding: auto;
-    }
-</style>
+      <!-- Projects -->
+      <section class="mb-5" id="projects">
+        <h2>Projects</h2>
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <div class="card h-100">
+              <div class="card-body">
+                <h5 class="card-title">
+                  <a
+                    href="https://www.wikipedia.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >AgriPool</a
+                  >
+                </h5>
+                <h6 class="card-subtitle mb-2 text-muted">April 2025</h6>
+                <p class="card-text">
+                  Django-based Transport Sharing Platform enabling farmers to
+                  list agricultural produce and drivers to create transport
+                  routes with geospatial features.
+                </p>
+                <p class="card-text">
+                  <small class="text-muted"
+                    >Python, Django, Leaflet.js, OpenStreetMap, Bootstrap</small
+                  >
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 mb-3">
+            <div class="card h-100">
+              <div class="card-body">
+                <h5 class="card-title">
+                  <a
+                    href="https://www.wikipedia.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >Deep Learning News Clustering</a
+                  >
+                </h5>
+                <p class="card-text">
+                  Clusters 1,440 news articles, uses Streamlit for
+                  visualization.
+                </p>
+                <p class="card-text">
+                  <small class="text-muted"
+                    >Python, LDA, SentenceTransformers, Streamlit, Gemini</small
+                  >
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 mb-3">
+            <div class="card h-100">
+              <div class="card-body">
+                <h5 class="card-title">
+                  <a
+                    href="https://www.wikipedia.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >LeetCode Stats Tracker</a
+                  >
+                </h5>
+                <p class="card-text">
+                  Serverless AWS pipeline to track coding stats.
+                </p>
+                <p class="card-text">
+                  <small class="text-muted"
+                    >Python, AWS Lambda, S3, EventBridge, GraphQL</small
+                  >
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
-<body class="container">
-    <ul class="list-group">
-        <li class="list-group-item">
-            <a href="./timer.html">Timer</a>
-        </li>
-        <li class="list-group-item">
-            <a href="./randomsumgame.html">Random Sum Game with Timer</a>
-        </li>
-        <li class="list-group-item">
-            <a href="./leetcode_grapher.html">Leetcode Ranking Graph</a>
-        </li>
-        <li class="list-group-item">
-            <a href="./resume.html">Resume</a>
-        </li>
-        <li class="list-group-item">
-            <a href="./clock.html">Just a digital clock</a>
-        </li>
-    </ul>
-</body>
+      <!-- Experience -->
+      <section class="mb-5" id="experience">
+        <h2>Experience</h2>
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Data Engineering Intern</h5>
+            <h6 class="card-subtitle mb-2 text-muted">
+              DataGrokr Analytics | June 2024 - Dec 2024
+            </h6>
+            <ul class="card-text">
+              <li>
+                Built CI/CD pipelines with GitHub Actions, Jenkins (Mocha,
+                Pytest).
+              </li>
+              <li>Created ETL pipelines using Python, SQL, Pandas, PySpark.</li>
+              <li>
+                Ingested & transformed data using GCP (Cloud Functions,
+                Dataflow, Pub/Sub).
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
 
+      <!-- Certificates -->
+      <section class="mb-5" id="micro-projects">
+        <h2>Micro Projects</h2>
+        <div class="row">
+          <div class="col-md-6 col-lg-4 mb-3">
+            <div class="card h-100">
+              <div class="card-body text-center">
+                <h5 class="card-title">Clock</h5>
+                <p class="card-text">Interactive digital clock application</p>
+                <a href="clock.html" class="btn btn-outline-primary btn-sm"
+                  >View Project</a
+                >
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-4 mb-3">
+            <div class="card h-100">
+              <div class="card-body text-center">
+                <h5 class="card-title">LeetCode Grapher</h5>
+                <p class="card-text">
+                  Visualize LeetCode progress and statistics
+                </p>
+                <a
+                  href="leetcode_grapher.html"
+                  class="btn btn-outline-primary btn-sm"
+                  >View Project</a
+                >
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-4 mb-3">
+            <div class="card h-100">
+              <div class="card-body text-center">
+                <h5 class="card-title">Random Sum Game</h5>
+                <p class="card-text">
+                  Fun mathematical game with random numbers
+                </p>
+                <a
+                  href="randomsumgame.html"
+                  class="btn btn-outline-primary btn-sm"
+                  >View Project</a
+                >
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-4 mb-3">
+            <div class="card h-100">
+              <div class="card-body text-center">
+                <h5 class="card-title">Resume</h5>
+                <p class="card-text">View and download my detailed resume</p>
+                <a href="resume.html" class="btn btn-outline-primary btn-sm"
+                  >View Resume</a
+                >
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-lg-4 mb-3">
+            <div class="card h-100">
+              <div class="card-body text-center">
+                <h5 class="card-title">Timer</h5>
+                <p class="card-text">
+                  Customizable countdown timer application
+                </p>
+                <a href="timer.html" class="btn btn-outline-primary btn-sm"
+                  >View Project</a
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Certificates -->
+      <section class="mb-5" id="certificates">
+        <h2>Certificates</h2>
+        <div class="row">
+          <div class="col-md-4 mb-3">
+            <div class="card h-100">
+              <div class="card-body text-center">
+                <div
+                  data-iframe-width="150"
+                  data-iframe-height="270"
+                  data-share-badge-id="606dc0b7-df47-4fed-96a6-f1c546f54cbc"
+                  data-share-badge-host="https://www.credly.com"
+                ></div>
+                <h5 class="card-title mt-3">GCP Associate Cloud Engineer</h5>
+                <p class="card-text">Google — Dec 2024</p>
+              </div>
+            </div>
+          </div>
+          <!-- Add more certificate cards here -->
+        </div>
+      </section>
+
+      <!-- Contact -->
+      <section class="mb-5" id="contact">
+        <h2>Contact</h2>
+        <div class="row">
+          <div class="col-md-6">
+            <p>
+              <strong>Email:</strong>
+              <a
+                href="mailto:ayanruzdan@gmail.com"
+                aria-label="Send email to Ayan Ruzdan"
+              >
+                ayanruzdan@gmail.com
+              </a>
+            </p>
+          </div>
+          <div class="col-md-6">
+            <p>
+              <strong>Phone:</strong>
+              <a href="tel:+917839132077" aria-label="Call Ayan Ruzdan">
+                +91-78391-32077
+              </a>
+            </p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white text-center p-3 mt-5">
+      <p class="mb-0">&copy; 2025 Ayan Ruzdan. All rights reserved.</p>
+    </footer>
+
+    <!-- Scripts -->
+    <script
+      type="text/javascript"
+      async
+      src="https://cdn.credly.com/assets/utilities/embed.js"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+      crossorigin="anonymous"
+    ></script>
+  </body>
 </html>
