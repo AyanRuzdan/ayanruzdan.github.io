@@ -1,0 +1,217 @@
+%-------------------------
+% Resume in Latex
+% Author : Jake Gutierrez
+% Based off of: https://github.com/sb2nov/resume
+% License : MIT
+%------------------------
+
+\documentclass[letterpaper,11pt]{article}
+
+\usepackage{latexsym}
+\usepackage[empty]{fullpage}
+\usepackage{titlesec}
+\usepackage{MnSymbol}
+\usepackage{marvosym}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{verbatim}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\usepackage{fancyhdr}
+\usepackage[english]{babel}
+\usepackage{tabularx}
+\usepackage{fontawesome5}
+\usepackage{multicol}
+\setlength{\multicolsep}{-3.0pt}
+\setlength{\columnsep}{-1pt}
+\input{glyphtounicode}
+
+
+%----------FONT OPTIONS----------
+% sans-serif
+% \usepackage[sfdefault]{FiraSans}
+% \usepackage[sfdefault]{roboto}
+% \usepackage[sfdefault]{noto-sans}
+% \usepackage[default]{sourcesanspro}
+
+% serif
+% \usepackage{CormorantGaramond}
+% \usepackage{charter}
+
+
+\pagestyle{fancy}
+\fancyhf{} % clear all header and footer fields
+\fancyfoot{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+
+% Adjust margins
+\addtolength{\oddsidemargin}{-0.6in}
+\addtolength{\evensidemargin}{-0.5in}
+\addtolength{\textwidth}{1.19in}
+\addtolength{\topmargin}{-.7in}
+\addtolength{\textheight}{1.4in}
+
+\urlstyle{same}
+
+\raggedbottom
+\raggedright
+\setlength{\tabcolsep}{0in}
+
+% Sections formatting
+\titleformat{\section}{
+  \vspace{-4pt}\scshape\raggedright\large\bfseries
+}{}{0em}{}[\color{black}\titlerule \vspace{-5pt}]
+
+% Ensure that generate pdf is machine readable/ATS parsable
+\pdfgentounicode=1
+
+%-------------------------
+% Custom commands
+\newcommand{\resumeItem}[1]{
+  \item\small{
+    {#1 \vspace{-2pt}}
+  }
+}
+
+\newcommand{\classesList}[4]{
+    \item\small{
+        {#1 #2 #3 #4 \vspace{-2pt}}
+  }
+}
+
+\newcommand{\resumeSubheading}[4]{
+  \vspace{-2pt}\item
+    \begin{tabular*}{1.0\textwidth}[t]{l@{\extracolsep{\fill}}r}
+      \textbf{#1} & \textbf{\small #2} \\
+      \textit{\small#3} & \textit{\small #4} \\
+    \end{tabular*}\vspace{-7pt}
+}
+
+\newcommand{\resumeSubSubheading}[2]{
+    \item
+    \begin{tabular*}{0.97\textwidth}{l@{\extracolsep{\fill}}r}
+      \textit{\small#1} & \textit{\small #2} \\
+    \end{tabular*}\vspace{-7pt}
+}
+
+\newcommand{\resumeProjectHeading}[2]{
+    \item
+    \begin{tabular*}{1.001\textwidth}{l@{\extracolsep{\fill}}r}
+      \small#1 & \textbf{\small #2}\\
+    \end{tabular*}\vspace{-7pt}
+}
+
+\newcommand{\resumeSubItem}[1]{\resumeItem{#1}\vspace{-4pt}}
+
+\renewcommand\labelitemi{$\vcenter{\hbox{\tiny$\bullet$}}$}
+\renewcommand\labelitemii{$\vcenter{\hbox{\tiny$\bullet$}}$}
+
+\newcommand{\resumeSubHeadingListStart}{\begin{itemize}[leftmargin=0.0in, label={}]}
+\newcommand{\resumeSubHeadingListEnd}{\end{itemize}}
+\newcommand{\resumeItemListStart}{\begin{itemize}}
+\newcommand{\resumeItemListEnd}{\end{itemize}\vspace{-5pt}}
+
+%-------------------------------------------
+%%%%%%  RESUME STARTS HERE  %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\begin{document}
+
+%----------HEADING----------
+% \begin{tabular*}{\textwidth}{l@{\extracolsep{\fill}}r}
+%   \textbf{\href{http://sourabhbajaj.com/}{\Large Sourabh Bajaj}} & Email : \href{mailto:sourabh@sourabhbajaj.com}{sourabh@sourabhbajaj.com}\\
+%   \href{http://sourabhbajaj.com/}{http://www.sourabhbajaj.com} & Mobile : +1-123-456-7890 \\
+% \end{tabular*}
+
+\begin{center}
+  {\Huge \scshape Ayan Ruzdan} \\ \vspace{1pt}
+  \small \raisebox{-0.1\height}\faPhone\ +91-78391-32077 ~ \href{mailto:x@gmail.com}{\raisebox{-0.2\height}\faEnvelope\  \underline{ayanruzdan@gmail.com}} ~
+  \href{https://linkedin.com/in//}{\raisebox{-0.2\height}\faLinkedin\ \underline{linkedin.com/in/ayan-ruzdan}}  ~
+  \href{https://github.com/}{\raisebox{-0.2\height}\faGithub\ \underline{github.com/AyanRuzdan}}
+  \vspace{-8pt}
+\end{center}
+
+%-----------EDUCATION-----------
+\section{EDUCATION}
+\resumeSubHeadingListStart
+\resumeSubheading
+{Lovely Professional University}{November 2021 -- July 2025}
+{Bachelor of Technology, CSE - 8.42/10 CGPA}{Phagwara, Punjab}
+\resumeSubheading
+{Sunbeam School Lahartara}{March 2018 -- March 2020}
+{Senior Secondary, PCM - 90.4\%}{Varanasi, Uttar Pradesh}
+\resumeSubHeadingListEnd
+
+%-----------EXPERIENCE-----------
+\section{EXPERIENCE}
+\resumeSubHeadingListStart
+
+\resumeSubheading
+{DataGrokr Analytics}{June 2024 -- December 2024}
+{Data Engineering Intern}{Bengaluru, KA}
+\resumeItemListStart
+\resumeItem{Developed and implemented CI/CD pipelines using GitHub Actions and Jenkins, automating unit tests for Node.js and Python projects (Mocha, Pytest), ensuring code quality and reducing integration errors by 15\%.}
+\resumeItem{Designed and built ETL pipelines with Python, SQL, Pandas, and PySpark to extract, transform, and load data, resulting in a 20\% improvement in data processing efficiency.  Created interactive dashboards and visualizations with Power BI to deliver actionable insights.}
+\resumeItem{Architected and deployed cost-optimized, fault-tolerant ETL pipelines on Google Cloud Platform (GCP), ingesting data from APIs, Cloud SQL, Pub/Sub, and Cloud Storage into BigQuery, ensuring continuous data flow and reducing data latency by 10\%. Leveraged Cloud Functions, Datastream, and Dataflow for seamless data transformation and ingestion.}
+\resumeItemListEnd
+
+\resumeSubHeadingListEnd
+\vspace{-16pt}
+
+%-----------PROJECTS-----------
+\section{PROJECTS}
+\vspace{-5pt}
+\resumeSubHeadingListStart
+\resumeProjectHeading
+{\textbf{\href{https://github.com/AyanRuzdan/agripool-django-project}{\underline{Deep Learning for News Clustering and Retrieval}}} $|$ \emph{Python, NLP, Streamlit, SentenceTransformers, Gemini}}{May 2025}
+\resumeItemListStart
+\resumeItem{Developed a deep learning pipeline to cluster and retrieve 1,440 science news articles using SentenceTransformer embeddings, K-means, and LDA.}
+\resumeItem{Optimized K-means clustering (k=5) using the elbow method, achieving a 0.04 silhouette score and 0.51 cosine similarity, and enhanced topic coherence with LDA (Cv=0.44).}
+\resumeItem{Visualized temporal keyword trends and topic clusters using PCA and Streamlit, improving interpretability of topic distributions by 25\%.}
+\resumeItem{Deployed a Retrieval-Augmented Generation (RAG) chatbot with FAISS and Gemini Pro for semantic, real-time question-answering on news archives.}
+\resumeItemListEnd
+\vspace{-13pt}
+\resumeProjectHeading
+{\textbf{\href{https://ayanruzdan.github.io/leetcode_grapher.html}{\underline{LeetCode Stats Tracker}}} $|$ \emph{Python, AWS Lambda, S3, EventBridge, GraphQL}}{December 2024}
+\resumeItemListStart
+\resumeItem{Developed a serverless pipeline using AWS Lambda to fetch LeetCode user statistics via a GraphQL API and store them in an S3 bucket.}
+\resumeItem{Configured AWS EventBridge to trigger the Lambda function periodically, ensuring automated data collection with 99.9\% uptime.}
+\resumeItem{Implemented data transformation using Python to extract rankings and problem-solving statistics, storing the most recent 1,500 entries.}
+\resumeItem{Integrated GitHub Pages to render the JSON file from S3, enabling a public-facing dashboard for tracking coding progress, increasing user engagement by 30\%.}
+\resumeItemListEnd
+\resumeSubHeadingListEnd
+
+
+\section{CERTIFICATES AND CERTIFICATIONS}
+\vspace{-5pt}
+\resumeSubHeadingListStart
+\resumeProjectHeading{\textbf{GCP Associate Cloud Engineer}}{Google | Dec' 24}
+\vspace{-28pt}
+\resumeProjectHeading{\textbf{React Basics}}{Meta | March' 24}
+\vspace{-28pt}
+\resumeProjectHeading{\textbf{MERN Stack}}{CipherSchools | July' 23}
+\resumeSubHeadingListEnd
+%
+%-----------PROGRAMMING SKILLS-----------
+\section{TECHNICAL SKILLS}
+\begin{itemize}[leftmargin=0.15in, label={}]
+  \item{
+        \textbf{Languages: }{C, C++, Python, SQL, Java, JavaScript} \\
+        \textbf{Developer Tools: }{Pandas, PowerBI, PySpark, Jenkins, Docker, Git, GitHub, GCS, Pub/Sub} \\
+        \textbf{Technologies/Frameworks: }{Node.js, React, Express, HTML, CSS, GCP, AWS, Kubernetes} } \\
+        \textbf{Databases: }{MySQL, MongoDB, SQLite, BigQuery}
+\end{itemize}
+\vspace{-16pt}
+
+%-----------INVOLVEMENT---------------
+\section{ACHIEVEMENTS}
+\begin{itemize}[leftmargin=0.15in, label={}]
+
+  \item
+        \textbf{Leetcode:} Solved 800+ questions on topics like DSA, SQL, and Pandas \\
+        \textbf{HackerRank:} 4-star rating in C++, 5-star rating in Python and SQL \\
+        \textbf{Codechef:} Highest rating of 1600 (3-star) with a total of 350+ problems solved \\
+        \textbf{Quill Club Writers:} Co-authored \textbf{Here Comes the Sun} in a collaborative book-writing workshop.
+\end{itemize}
+
+\end{document}
