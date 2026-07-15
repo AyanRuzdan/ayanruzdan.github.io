@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>ASCII Spring Curtain</title>
+    <style>
+        html,
+        body {
+            margin: 0;
+            overflow: hidden;
+            background: #FAF9F6;
+        }
+
+        canvas {
+            display: block;
+            cursor: grab;
+        }
+
+        canvas:active {
+            cursor: grabbing;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="canvas"></canvas>
+    <script>
+        const canvas = document.getElementById("canvas");
+        const ctx = canvas.getContext("2d");
+
+        // Physics Settings
+        const COUNT = 45;
+        const SPACING = 18;
+        const HORIZONTAL_SPACING = 20;
+        const GRAVITY = 0.45;
+        const DAMPING = 0.95;
+        const ITERATIONS = 16;
+
+        // Hindi Characters (Devanagari)
+        const ASCII = ("अआइईउऊएऐओऔकखगघङचछजझञटठडढणतथदधनपफबभमयरलवशषसह०१२३४५६७८९").split("");
+
+        // Mouse Controls & State
+        const mouse = { x: 0, y: 0, down: false, selected: null };
+
+        class Node {
+            constructor(x, y, fixed = false) {
+                this.x = x;
+                this.y = y;
+                this.oldx = x;
+                this.oldy = y;
+                this.fixed = fixed;
+                this.char = ASCII[Math.floor(Math.random() * ASCII.length)];
+            }
+            update() {
+                if (this.fixed) return;
+                let vx = (this.x - this.oldx) * DAMPING;
+                let vy = (this.y - this.oldy) * DAMPING;
+                this.oldx = this.x;
+                this.oldy = this.y;
+                this.x += vx;
+                this.y += vy + GRAVITY;
+            }
+        }
+
+        // Build Curtain
+        let threads = [];
+        function buildCurtain() {
+            threads = [];
+            const numThreads = 30; // user requested ~30 threads
+            const totalWidth = (numThreads - 1) * HORIZONTAL_SPACING;
+            const startXOffset = (canvas.width - totalWidth) / 2;
+            for (let t = 0; t < numThreads; t++) {
+                const nodes = [];
+                const startX = startXOffset + t * HORIZONTAL_SPACING;
+                for (let i = 0; i < COUNT; i++) {
+                    nodes.push(new Node(startX, 50 + i * SPACING, i === 0));
+                }
+                threads.push(nodes);
+            }
+        }
+
+        function resize() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            buildCurtain();
+        }
+        window.addEventListener("resize", resize);
+        resize();
+
+        // Constraint Solver
+        function applyConstraint(a, b, targetDist) {
+            let dx = b.x - a.x;
+            let dy = b.y - a.y;
+            let dist = Math.sqrt(dx * dx + dy * dy);
+            if (dist === 0) return;
+            let diff = (dist - targetDist) / dist;
+            let ox = dx * diff * 0.5;
+            let oy = dy * diff * 0.5;
+            if (!a.fixed) {
+                a.x += ox;
+                a.y += oy;
+            }
+            if (!b.fixed) {
+                b.x -= ox;
+                b.y -= oy;
+            }
+        }
+
+        function satisfyConstraints() {
+            for (const nodes of threads) {
+                for (let i = 0; i < nodes.length - 1; i++) {
+                    applyConstraint(nodes[i], nodes[i + 1], SPACING);
+                }
+            }
+            for (let t = 0; t < threads.length - 1; t++) {
+                const nodesA = threads[t];
+                const nodesB = threads[t + 1];
+                for (let i = 0; i < COUNT; i++) {
+                    applyConstraint(nodesA[i], nodesB[i], HORIZONTAL_SPACING);
+                }
+            }
+        }
+
+        // Mouse & Touch Controls
+        function handlePointerDown(x, y) {
+            mouse.down = true;
+            mouse.x = x;
+            mouse.y = y;
+            let nearest = null;
+            let best = 35; // slightly larger hit area for touch
+            for (const nodes of threads) {
+                for (const node of nodes) {
+                    let d = Math.hypot(node.x - mouse.x, node.y - mouse.y);
+                    if (d < best) {
+                        best = d;
+                        nearest = node;
+                    }
+                }
+            }
+            mouse.selected = nearest;
+        }
+
+        function handlePointerUp() {
+            mouse.down = false;
+            mouse.selected = null;
+        }
+
+        function handlePointerMove(x, y) {
+            mouse.x = x;
+            mouse.y = y;
+        }
+
+        canvas.addEventListener("mousedown", e => handlePointerDown(e.clientX, e.clientY));
+        window.addEventListener("mouseup", handlePointerUp);
+        window.addEventListener("mousemove", e => handlePointerMove(e.clientX, e.clientY));
+
+        canvas.addEventListener("touchstart", e => {
+            e.preventDefault();
+            handlePointerDown(e.touches[0].clientX, e.touches[0].clientY);
+        }, { passive: false });
+        
+        window.addEventListener("touchend", handlePointerUp);
+        window.addEventListener("touchcancel", handlePointerUp);
+        
+        window.addEventListener("touchmove", e => {
+            e.preventDefault();
+            handlePointerMove(e.touches[0].clientX, e.touches[0].clientY);
+        }, { passive: false });
+
+        // Animation Loop
+        function animate() {
+            requestAnimationFrame(animate);
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (const nodes of threads) {
+                for (const node of nodes) node.update();
+            }
+            if (mouse.down && mouse.selected && !mouse.selected.fixed) {
+                mouse.selected.x = mouse.x;
+                mouse.selected.y = mouse.y;
+            } else if (!mouse.down && mouse.x !== 0 && mouse.y !== 0) {
+                // Hover push effect
+                for (const nodes of threads) {
+                    for (const node of nodes) {
+                        if (!node.fixed) {
+                            let d = Math.hypot(node.x - mouse.x, node.y - mouse.y);
+                            if (d < 50) {
+                                let angle = Math.atan2(node.y - mouse.y, node.x - mouse.x);
+                                node.x += Math.cos(angle) * (50 - d) * 0.1;
+                                node.y += Math.sin(angle) * (50 - d) * 0.1;
+                            }
+                        }
+                    }
+                }
+            }
+            for (let i = 0; i < ITERATIONS; i++) {
+                satisfyConstraints();
+            }
+            ctx.font = "18px serif";
+            ctx.textAlign = "center";
+            ctx.textBaseline = "middle";
+            ctx.fillStyle = "#000000";
+            for (const nodes of threads) {
+                for (const node of nodes) {
+                    ctx.fillText(node.char, node.x, node.y);
+                }
+            }
+        }
+        animate();
+    </script>
+</body>
+
+</html>
