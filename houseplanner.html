@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>HousePlanner — 2D & 3D Floor Plan Creator</title>
+<style>
+:root{--bg:#0b1020;--panel:#111a2e;--panel2:#17223a;--line:#263550;--text:#edf3ff;--muted:#9aabc7;--accent:#7c9cff;--mint:#67e8c0;--danger:#ff7e8b}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:14px/1.45 Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,sans-serif}button,input,select{font:inherit}button{cursor:pointer;border:1px solid var(--line);background:#1a2741;color:var(--text);border-radius:10px;padding:9px 12px;transition:.15s}button:hover{border-color:var(--accent);background:#223252}button.primary{background:var(--accent);color:#081126;border-color:transparent;font-weight:750}button.active{background:#263c65;border-color:var(--accent);color:#fff}button.danger{color:#ffabb3}input,select{background:#0c1426;color:var(--text);border:1px solid var(--line);border-radius:8px;padding:8px;width:100%;min-width:0}label{display:block;color:var(--muted);font-size:12px;margin-bottom:5px}.app{min-height:100vh;display:flex;flex-direction:column}.topbar{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:15px 20px;border-bottom:1px solid var(--line);background:#0e1629;position:sticky;top:0;z-index:5}.brand{display:flex;align-items:center;gap:11px;font-size:17px;font-weight:800;letter-spacing:-.4px}.logo{width:34px;height:34px;border-radius:11px;background:linear-gradient(135deg,var(--accent),var(--mint));display:grid;place-items:center;color:#071225;font-size:19px}.brand small{display:block;font-size:11px;color:var(--muted);font-weight:500;letter-spacing:0}.actions{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}.workspace{display:grid;grid-template-columns:245px minmax(0,1fr) 250px;gap:12px;padding:12px;flex:1;min-height:0}.panel{background:var(--panel);border:1px solid var(--line);border-radius:14px;overflow:hidden;min-width:0}.panel-head{padding:14px 15px 10px;font-weight:750;border-bottom:1px solid #202d45}.panel-body{padding:14px}.section{margin-bottom:20px}.section-title{font-size:11px;text-transform:uppercase;letter-spacing:1.2px;color:var(--muted);font-weight:800;margin:0 0 10px}.toolgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.tool{padding:12px 8px;text-align:left;min-height:76px}.tool b{display:block;font-size:13px;margin-top:7px}.tool span{font-size:20px}.tool small{display:block;color:var(--muted);font-size:11px;margin-top:2px}.field{margin-bottom:12px}.row{display:grid;grid-template-columns:1fr 1fr;gap:8px}.canvas-panel{display:flex;flex-direction:column;min-height:65vh}.canvas-toolbar{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;padding:10px 12px;border-bottom:1px solid var(--line)}.tabs{display:flex;gap:5px}.tabs button{padding:8px 13px}.canvas-wrap{position:relative;flex:1;min-height:480px;background:#0b1324;overflow:hidden}#plan2d,#plan3d{position:absolute;inset:0;width:100%;height:100%;display:block}#plan3d{display:none;touch-action:pan-y}.hint{position:absolute;left:12px;bottom:12px;background:#101b30dd;border:1px solid var(--line);border-radius:9px;padding:8px 10px;color:var(--muted);font-size:11px;pointer-events:none}.status{display:flex;justify-content:space-between;gap:10px;padding:10px 14px;border-top:1px solid var(--line);color:var(--muted);font-size:12px}.room-list{display:flex;flex-direction:column;gap:7px}.room-item{display:flex;align-items:center;gap:8px;padding:9px;border:1px solid var(--line);border-radius:9px;background:#0e1729}.swatch{width:11px;height:11px;border-radius:3px;flex:none}.room-item button{padding:4px 7px;margin-left:auto}.empty{color:var(--muted);font-size:12px;padding:10px 0}.stat{padding:12px;border:1px solid var(--line);background:#0e1729;border-radius:10px;margin-bottom:8px}.stat strong{display:block;font-size:20px;letter-spacing:-.5px}.stat span{color:var(--muted);font-size:11px}.checkline{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:12px;margin:10px 0}.checkline input{width:auto}.note{color:var(--muted);font-size:11px;line-height:1.55}.mobile-toggle{display:none}
+@media(max-width:1100px){.workspace{grid-template-columns:220px minmax(0,1fr)}.right-panel{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr;gap:0}.right-panel .panel-head{grid-column:1/-1}.right-panel .panel-body{display:contents}.right-panel .section{padding:14px;margin:0}.right-panel .section+ .section{border-left:1px solid var(--line)}}
+@media(max-width:760px){.topbar{align-items:flex-start;padding:12px;flex-direction:column}.actions{justify-content:flex-start}.workspace{display:flex;flex-direction:column;padding:8px}.left-panel{order:2}.canvas-panel{order:1;min-height:70vh}.right-panel{order:3;display:block}.right-panel .panel-body{display:block}.right-panel .section{padding:14px}.right-panel .section+.section{border-left:0;border-top:1px solid var(--line)}.canvas-wrap{min-height:420px}.toolgrid{grid-template-columns:repeat(4,1fr)}.tool{min-height:68px;padding:8px 5px}.tool b{font-size:11px}.tool small{display:none}}
+</style>
+</head>
+<body>
+<div class="app">
+<header class="topbar">
+  <div class="brand"><div class="logo">⌂</div><div>HousePlanner<small>Design your space · 2D + 3D</small></div></div>
+  <div class="actions">
+    <button id="undoBtn" title="Undo last change">↶ Undo</button>
+    <button id="clearBtn" class="danger">Clear plan</button>
+    <button id="saveBtn">Save locally</button>
+    <button id="exportBtn" class="primary">Export plan ↓</button>
+  </div>
+</header>
+<main class="workspace">
+  <aside class="panel left-panel">
+    <div class="panel-head">Build your plan</div>
+    <div class="panel-body">
+      <section class="section">
+        <h3 class="section-title">Add a room</h3>
+        <div class="toolgrid">
+          <button class="tool" data-room="Living Room"><span>🛋️</span><b>Living room</b><small>5 × 4 m</small></button>
+          <button class="tool" data-room="Bedroom"><span>🛏️</span><b>Bedroom</b><small>4 × 3.5 m</small></button>
+          <button class="tool" data-room="Kitchen"><span>🍳</span><b>Kitchen</b><small>3 × 3 m</small></button>
+          <button class="tool" data-room="Bathroom"><span>🚿</span><b>Bathroom</b><small>2 × 2 m</small></button>
+          <button class="tool" data-room="Dining"><span>🍽️</span><b>Dining</b><small>3 × 3 m</small></button>
+          <button class="tool" data-room="Office"><span>💻</span><b>Office</b><small>3 × 3 m</small></button>
+          <button class="tool" data-room="Garage"><span>🚗</span><b>Garage</b><small>5.5 × 3 m</small></button>
+          <button class="tool" data-room="Custom"><span>＋</span><b>Custom</b><small>Choose size</small></button>
+        </div>
+      </section>
+      <section class="section">
+        <h3 class="section-title">Canvas settings</h3>
+        <div class="row">
+          <div class="field"><label for="gridSize">Grid spacing</label><select id="gridSize"><option value="0.25">0.25 m</option><option value="0.5" selected>0.5 m</option><option value="1">1 m</option></select></div>
+          <div class="field"><label for="wallHeight">Wall height</label><select id="wallHeight"><option value="2.4">2.4 m</option><option value="2.7" selected>2.7 m</option><option value="3">3.0 m</option><option value="3.3">3.3 m</option></select></div>
+        </div>
+        <label class="checkline"><input id="snapToggle" type="checkbox" checked> Snap rooms to grid</label>
+        <label class="checkline"><input id="labelsToggle" type="checkbox" checked> Show room labels</label>
+      </section>
+      <section class="section">
+        <h3 class="section-title">Quick tips</h3>
+        <p class="note">• Click a room to select it.<br>• Drag a selected room to move it.<br>• Resize with the handle at its bottom-right corner.<br>• Use the 3D tab to orbit the model by dragging.<br>• Measurements are in metres.</p>
+      </section>
+    </div>
+  </aside>
+  <section class="panel canvas-panel">
+    <div class="canvas-toolbar">
+      <div class="tabs"><button id="tab2d" class="active">▦ 2D Plan</button><button id="tab3d">◇ 3D View</button></div>
+      <div class="actions"><button id="zoomOut">−</button><button id="zoomReset">Fit</button><button id="zoomIn">＋</button></div>
+    </div>
+    <div class="canvas-wrap" id="canvasWrap">
+      <svg id="plan2d" role="img" aria-label="Editable 2D house floor plan"></svg>
+      <canvas id="plan3d" aria-label="Interactive 3D house model"></canvas>
+      <div class="hint" id="hint">Select a room · drag to move · corner handle to resize</div>
+    </div>
+    <div class="status"><span id="statusText">Ready to design</span><span id="scaleText">Grid: 0.5 m</span></div>
+  </section>
+  <aside class="panel right-panel">
+    <div class="panel-head">Plan details</div>
+    <div class="panel-body">
+      <section class="section">
+        <h3 class="section-title">Selected room</h3>
+        <div id="selectionEmpty" class="empty">Select a room on the plan to edit its details.</div>
+        <div id="selectionForm" hidden>
+          <div class="field"><label for="roomName">Room name</label><input id="roomName" maxlength="32"></div>
+          <div class="row">
+            <div class="field"><label for="roomW">Width (m)</label><input id="roomW" type="number" min="1" max="30" step=".25"></div>
+            <div class="field"><label for="roomH">Length (m)</label><input id="roomH" type="number" min="1" max="30" step=".25"></div>
+          </div>
+          <div class="row">
+            <div class="field"><label for="roomX">Position X (m)</label><input id="roomX" type="number" min="0" max="100" step=".25"></div>
+            <div class="field"><label for="roomY">Position Y (m)</label><input id="roomY" type="number" min="0" max="100" step=".25"></div>
+          </div>
+          <div class="field"><label for="roomColor">Room colour</label><input id="roomColor" type="color" value="#9bbcff"></div>
+          <button id="deleteRoom" class="danger" style="width:100%">Delete selected room</button>
+        </div>
+      </section>
+      <section class="section">
+        <h3 class="section-title">Overview</h3>
+        <div class="stat"><strong id="areaStat">0 m²</strong><span>Total floor area</span></div>
+        <div class="stat"><strong id="roomStat">0</strong><span>Rooms in plan</span></div>
+        <div class="stat"><strong id="boundsStat">—</strong><span>Overall footprint (W × L)</span></div>
+      </section>
+      <section class="section">
+        <h3 class="section-title">Rooms list</h3>
+        <div id="roomList" class="room-list"><div class="empty">Your rooms will appear here.</div></div>
+      </section>
+    </div>
+  </aside>
+</main>
+</div>
+<script>
+(()=>{
+'use strict';
+const $=id=>document.getElementById(id);
+const svg=$('plan2d'), canvas=$('plan3d'), wrap=$('canvasWrap');
+const NS='http://www.w3.org/2000/svg';
+const palette=['#a8c5ff','#a6e7d5','#ffd49a','#d8b8ff','#ffb8c4','#b8d9f0','#c8e7a4'];
+const presets={'Living Room':[5,4],'Bedroom':[4,3.5],'Kitchen':[3,3],'Bathroom':[2,2],'Dining':[3,3],'Office':[3,3],'Garage':[5.5,3],'Custom':[4,3]};
+let rooms=[],selected=null,nextId=1,mode='2d',zoom=1,panX=0,panY=0,drag=null,history=[],orbitX=-.55,orbitY=.72,lastPointer=null;
+function snap(v){if(!$('snapToggle').checked)return Math.max(0,v);let g=+$('gridSize').value;return Math.max(0,Math.round(v/g)*g)}
+function num(v,fallback){let n=Number(v);return Number.isFinite(n)?n:fallback}
+function snapshot(){history.push(JSON.stringify({rooms,selected,nextId}));if(history.length>35)history.shift()}
+function restore(){if(!history.length)return;let s=JSON.parse(history.pop());rooms=s.rooms;selected=s.selected;nextId=s.nextId;render()}
+function addRoom(name){snapshot();let [w,h]=presets[name]||[4,3];if(name==='Custom'){let a=prompt('Room width in metres (1–30):','4');if(a===null){history.pop();return}let b=prompt('Room length in metres (1–30):','3');if(b===null){history.pop();return}w=Math.max(1,Math.min(30,num(a,4)));h=Math.max(1,Math.min(30,num(b,3)));name='Custom Room'}
+ const maxX=rooms.reduce((m,r)=>Math.max(m,r.x+r.w),0);const maxY=rooms.reduce((m,r)=>Math.max(m,r.y+r.h),0);
+ const r={id:nextId++,name,w,h,x:snap(rooms.length?maxX+.25:0),y:snap(rooms.length?0:0),color:palette[(nextId-2)%palette.length]};
+ if(r.x+w>35){r.x=0;r.y=snap(maxY+.25)}rooms.push(r);selected=r.id;render();fitView()}
+function el(tag,attrs={},parent=svg){let n=document.createElementNS(NS,tag);for(const [k,v] of Object.entries(attrs))n.setAttribute(k,v);parent.appendChild(n);return n}
+function bounds(){if(!rooms.length)return {w:12,h:9};return {w:Math.max(8,...rooms.map(r=>r.x+r.w))+1,h:Math.max(6,...rooms.map(r=>r.y+r.h))+1}}
+function getTransform(){let b=bounds(),W=wrap.clientWidth,H=wrap.clientHeight;let s=Math.min((W-70)/b.w,(H-70)/b.h)*zoom;return {s,ox:(W-b.w*s)/2+panX,oy:(H-b.h*s)/2+panY}}
+function render2d(){svg.innerHTML='';let W=wrap.clientWidth,H=wrap.clientHeight;svg.setAttribute('viewBox',`0 0 ${W} ${H}`);svg.setAttribute('preserveAspectRatio','none');svg.style.display=mode==='2d'?'block':'none';if(mode!=='2d')return;
+ let {s,ox,oy}=getTransform(),b=bounds();el('rect',{x:0,y:0,width:W,height:H,fill:'#0b1324'});
+ let defs=el('defs');let p=el('pattern',{id:'grid',width:s*+$('gridSize').value,height:s*+$('gridSize').value,patternUnits:'userSpaceOnUse',x:ox,y:oy},defs);el('path',{d:`M ${s*+$('gridSize').value} 0 L 0 0 0 ${s*+$('gridSize').value}`,fill:'none',stroke:'#1b2940','stroke-width':1},p);
+ el('rect',{x:0,y:0,width:W,height:H,fill:'url(#grid)'});
+ rooms.forEach(r=>{let x=ox+r.x*s,y=oy+r.y*s,w=r.w*s,h=r.h*s;let g=el('g',{'data-id':r.id,style:'cursor:move'});el('rect',{x,y,width:w,height:h,rx:2,fill:r.color+'32',stroke:r.id===selected?'#7c9cff':'#d2dff5','stroke-width':r.id===selected?3:2},g);
+ // interior floor hatch subtle
+ el('path',{d:`M ${x+5} ${y+h-5} L ${x+w-5} ${y+5}`,stroke:r.color,opacity:.13,'stroke-width':1},g);
+ if($('labelsToggle').checked){let t=el('text',{x:x+w/2,y:y+h/2-3,'text-anchor':'middle','font-size':Math.min(16,Math.max(10,s*.32)),'font-weight':700,fill:'#eef4ff','pointer-events':'none'},g);t.textContent=r.name;let t2=el('text',{x:x+w/2,y:y+h/2+14,'text-anchor':'middle','font-size':Math.min(12,Math.max(9,s*.23)),fill:'#b8c7df','pointer-events':'none'},g);t2.textContent=`${r.w.toFixed(2)} × ${r.h.toFixed(2)} m`}
+ // dimension lines
+ el('line',{x1:x,y1:y-8,x2:x+w,y2:y-8,stroke:'#8395b2','stroke-width':1},g);el('line',{x1:x-8,y1:y,x2:x-8,y2:y+h,stroke:'#8395b2','stroke-width':1},g);
+ if(r.id===selected){el('rect',{x:x+w-6,y:y+h-6,width:12,height:12,rx:2,fill:'#7c9cff',stroke:'#fff','stroke-width':1,'data-resize':r.id,style:'cursor:nwse-resize'},g)}
+ });
+ if(rooms.length){let x=ox,y=oy+b.h*s+16;let t=el('text',{x,y,fill:'#8294b2','font-size':11});t.textContent='Plan dimensions are in metres · rooms are schematic and can overlap.'}
+}
+function render3d(){canvas.style.display=mode==='3d'?'block':'none';if(mode!=='3d')return;const rect=wrap.getBoundingClientRect(),dpr=window.devicePixelRatio||1;canvas.width=Math.round(rect.width*dpr);canvas.height=Math.round(rect.height*dpr);canvas.style.width=rect.width+'px';canvas.style.height=rect.height+'px';let ctx=canvas.getContext('2d');ctx.scale(dpr,dpr);let W=rect.width,H=rect.height;ctx.fillStyle='#0b1324';ctx.fillRect(0,0,W,H);
+ // perspective-style isometric projection, no dependencies
+ let maxX=Math.max(8,...rooms.map(r=>r.x+r.w)),maxY=Math.max(6,...rooms.map(r=>r.y+r.h)),wall=+$('wallHeight').value;
+ let scale=Math.min((W-100)/(maxX+maxY)*1.2,(H-100)/(maxX+maxY*.55+wall*1.6));scale*=zoom;
+ const cx=W/2+panX,cy=H*.56+panY;
+ function project(x,y,z=0){return [cx+(x-y)*scale*.72,cy+(x+y)*scale*.36-z*scale*.72]}
+ function poly(points,fill,stroke='#344763',lw=1){ctx.beginPath();points.forEach((p,i)=>{let q=project(...p);i?ctx.lineTo(...q):ctx.moveTo(...q)});ctx.closePath();ctx.fillStyle=fill;ctx.fill();ctx.strokeStyle=stroke;ctx.lineWidth=lw;ctx.stroke()}
+ // ground plane
+ poly([[0,0,0],[maxX+1,0,0],[maxX+1,maxY+1,0],[0,maxY+1,0]],'#101c30','#1d2b43');
+ // floor slabs then raised walls
+ rooms.forEach(r=>{let z=wall;let color=r.color;poly([[r.x,r.y,0],[r.x+r.w,r.y,0],[r.x+r.w,r.y+r.h,0],[r.x,r.y+r.h,0]],color+'cc','#d6e3fa',1.4);
+ // three wall segments, leave front partly open to see inside
+ const segments=[[[r.x,r.y,0],[r.x+r.w,r.y,0],[r.x+r.w,r.y,z],[r.x,r.y,z]],[[r.x,r.y,0],[r.x,r.y+r.h,0],[r.x,r.y+r.h,z],[r.x,r.y,z]],[[r.x+r.w,r.y,0],[r.x+r.w,r.y+r.h,0],[r.x+r.w,r.y+r.h,z],[r.x+r.w,r.y,z]]];
+ segments.forEach((pts,i)=>poly(pts,i===0?'#8da5ca':i===1?'#657fa8':'#7892b9','#d4e0f3',1));
+ // front edge walls kept low/open-ish
+ poly([[r.x,r.y+r.h,0],[r.x+r.w,r.y+r.h,0],[r.x+r.w,r.y+r.h,wall*.24],[r.x,r.y+r.h,wall*.24]],'#9db3d2','#d4e0f3',1);
+ if($('labelsToggle').checked){let p=project(r.x+r.w/2,r.y+r.h/2,.04);ctx.fillStyle='#13213a';ctx.font='bold 12px system-ui';ctx.textAlign='center';ctx.fillText(r.name,p[0],p[1]+4);ctx.fillStyle='#263a58';ctx.font='10px system-ui';ctx.fillText(`${r.w} × ${r.h} m`,p[0],p[1]+17)}
+ });
+ ctx.fillStyle='#9aabc7';ctx.font='12px system-ui';ctx.textAlign='left';ctx.fillText('Drag to orbit · scroll to zoom',14,22);
+}
+function render(){render2d();render3d();updateUI()}
+function updateUI(){let r=rooms.find(x=>x.id===selected);$('selectionEmpty').hidden=!!r;$('selectionForm').hidden=!r;if(r){$('roomName').value=r.name;$('roomW').value=r.w;$('roomH').value=r.h;$('roomX').value=r.x;$('roomY').value=r.y;$('roomColor').value=r.color}
+ let area=rooms.reduce((s,r)=>s+r.w*r.h,0),b=bounds();$('areaStat').textContent=area.toFixed(2)+' m²';$('roomStat').textContent=rooms.length;$('boundsStat').textContent=rooms.length?`${(Math.max(...rooms.map(r=>r.x+r.w))).toFixed(2)} × ${(Math.max(...rooms.map(r=>r.y+r.h))).toFixed(2)} m`:'—';$('scaleText').textContent=`Grid: ${$('gridSize').value} m`;$('statusText').textContent=rooms.length?`${rooms.length} room${rooms.length===1?'':'s'} · ${area.toFixed(2)} m² floor area`:'Ready to design';
+ const list=$('roomList');list.innerHTML='';if(!rooms.length){list.innerHTML='<div class="empty">Your rooms will appear here.</div>';return}rooms.forEach(room=>{let item=document.createElement('div');item.className='room-item';let sw=document.createElement('span');sw.className='swatch';sw.style.background=room.color;let txt=document.createElement('span');txt.style.minWidth='0';txt.style.overflow='hidden';txt.style.textOverflow='ellipsis';txt.style.whiteSpace='nowrap';txt.textContent=room.name;let dim=document.createElement('small');dim.style.color='var(--muted)';dim.style.marginLeft='auto';dim.textContent=`${(room.w*room.h).toFixed(1)}m²`;item.append(sw,txt,dim);item.onclick=()=>{selected=room.id;render()};if(room.id===selected)item.style.borderColor='var(--accent)';list.appendChild(item)})}
+function fitView(){zoom=1;panX=0;panY=0;render()}
+function applyField(id,field,transform){let r=rooms.find(x=>x.id===selected);if(!r)return;snapshot();r[field]=transform($(id).value);render()}
+document.querySelectorAll('[data-room]').forEach(b=>b.addEventListener('click',()=>addRoom(b.dataset.room)));
+$('tab2d').onclick=()=>{mode='2d';$('tab2d').classList.add('active');$('tab3d').classList.remove('active');$('hint').textContent='Select a room · drag to move · corner handle to resize';render()};
+$('tab3d').onclick=()=>{mode='3d';$('tab3d').classList.add('active');$('tab2d').classList.remove('active');$('hint').textContent='Drag to orbit the model · use + / − to zoom';render()};
+$('gridSize').onchange=render;$('wallHeight').onchange=render;$('labelsToggle').onchange=render;
+$('zoomIn').onclick=()=>{zoom=Math.min(2.5,zoom*1.15);render()};$('zoomOut').onclick=()=>{zoom=Math.max(.35,zoom/1.15);render()};$('zoomReset').onclick=fitView;$('undoBtn').onclick=restore;
+$('clearBtn').onclick=()=>{if(!rooms.length||confirm('Clear all rooms from this plan?')){snapshot();rooms=[];selected=null;render()}};
+$('deleteRoom').onclick=()=>{if(!rooms.some(r=>r.id===selected))return;snapshot();rooms=rooms.filter(r=>r.id!==selected);selected=rooms.length?rooms[rooms.length-1].id:null;render()};
+$('roomName').onchange=()=>applyField('roomName','name',v=>v.trim()||'Room');
+['roomW','roomH'].forEach(id=>$(id).onchange=()=>applyField(id,id==='roomW'?'w':'h',v=>Math.max(1,Math.min(30,num(v,3)))));
+['roomX','roomY'].forEach(id=>$(id).onchange=()=>applyField(id,id==='roomX'?'x':'y',v=>snap(Math.min(100,num(v,0)))));
+$('roomColor').onchange=()=>applyField('roomColor','color',v=>v);
+function point(e){let r=svg.getBoundingClientRect();return {x:e.clientX-r.left,y:e.clientY-r.top}}
+svg.addEventListener('pointerdown',e=>{if(mode!=='2d')return;let p=point(e),{s,ox,oy}=getTransform();let found=null,resize=false;for(let i=rooms.length-1;i>=0;i--){let r=rooms[i],x=ox+r.x*s,y=oy+r.y*s,w=r.w*s,h=r.h*s;if(p.x>=x&&p.x<=x+w&&p.y>=y&&p.y<=y+h){found=r;resize=p.x>x+w-15&&p.y>y+h-15;break}}
+ if(found){selected=found.id;drag={id:found.id,start:p,orig:{x:found.x,y:found.y,w:found.w,h:found.h},resize};svg.setPointerCapture(e.pointerId);render()}else{selected=null;render()}});
+svg.addEventListener('pointermove',e=>{if(!drag||mode!=='2d')return;let p=point(e),{s}=getTransform(),r=rooms.find(x=>x.id===drag.id);if(!r)return;let dx=(p.x-drag.start.x)/s,dy=(p.y-drag.start.y)/s;if(drag.resize){r.w=Math.max(1,Math.round((drag.orig.w+dx)*4)/4);r.h=Math.max(1,Math.round((drag.orig.h+dy)*4)/4)}else{r.x=snap(drag.orig.x+dx);r.y=snap(drag.orig.y+dy)}render()});
+function endDrag(){if(drag){snapshot();history.pop();history.push(JSON.stringify({rooms:JSON.parse(JSON.stringify(rooms.map(r=>({...r})))),selected,nextId}));drag=null;render()}}
+svg.addEventListener('pointerup',endDrag);svg.addEventListener('pointercancel',endDrag);
+canvas.addEventListener('pointerdown',e=>{if(mode!=='3d')return;lastPointer={x:e.clientX,y:e.clientY};canvas.setPointerCapture(e.pointerId)});
+canvas.addEventListener('pointermove',e=>{if(mode!=='3d'||!lastPointer)return;let dx=e.clientX-lastPointer.x,dy=e.clientY-lastPointer.y;orbitY+=dx*.008;orbitX+=dy*.008;panX+=dx*.35;panY+=dy*.35;lastPointer={x:e.clientX,y:e.clientY};render3d()});
+canvas.addEventListener('pointerup',()=>{lastPointer=null});canvas.addEventListener('pointercancel',()=>{lastPointer=null});
+canvas.addEventListener('wheel',e=>{e.preventDefault();zoom=Math.max(.35,Math.min(2.5,zoom*(e.deltaY>0?.92:1.08)));render3d()},{passive:false});
+$('saveBtn').onclick=()=>{localStorage.setItem('houseplanner-plan',JSON.stringify({rooms,selected,nextId}));$('statusText').textContent='Saved in this browser'};
+function exportPlan(){let data={app:'HousePlanner',version:1,units:'metres',wallHeight:+$('wallHeight').value,rooms};let blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});let a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='house-plan.json';a.click();URL.revokeObjectURL(a.href)}
+$('exportBtn').onclick=exportPlan;
+window.addEventListener('resize',render);
+try{let saved=localStorage.getItem('houseplanner-plan');if(saved){let d=JSON.parse(saved);rooms=Array.isArray(d.rooms)?d.rooms:[];selected=d.selected;nextId=d.nextId||1}}catch(e){}
+if(!rooms.length){rooms=[{id:nextId++,name:'Living Room',x:0,y:0,w:5,h:4,color:'#a8c5ff'},{id:nextId++,name:'Kitchen',x:5.25,y:0,w:3,h:3,color:'#a6e7d5'},{id:nextId++,name:'Bedroom',x:0,y:4.25,w:4,h:3.5,color:'#ffd49a'},{id:nextId++,name:'Bathroom',x:4.25,y:4.25,w:2,h:2,color:'#d8b8ff'}];selected=rooms[0].id}
+render();
+})();
+</script>
+</body>
+</html>
